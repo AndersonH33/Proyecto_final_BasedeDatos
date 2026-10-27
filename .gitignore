@@ -1,0 +1,50 @@
+# -----------------------------
+# Dependencias (Frontend y Backend)
+# -----------------------------
+node_modules/
+.pnp/
+.pnp.js
+
+# -----------------------------
+# Variables de entorno (¡CRÍTICO!)
+# Aquí irán las contraseñas de SQL Server y Oracle
+# -----------------------------
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# -----------------------------
+# Builds y Producción (React/Vite)
+# -----------------------------
+dist/
+dist-ssr/
+build/
+*.local
+
+# -----------------------------
+# Logs de NPM/Yarn
+# -----------------------------
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# -----------------------------
+# Archivos de Testing
+# -----------------------------
+coverage/
+
+# -----------------------------
+# Archivos del Sistema y Editores de Código
+# -----------------------------
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
