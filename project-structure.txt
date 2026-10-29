@@ -1,0 +1,29 @@
+├── BACKEND/
+│   ├── src/
+│   │   ├── config/
+│   │   │   ├── oracle.js (0.5 KB)
+│   │   │   └── sqlserver.js (0.6 KB)
+│   │   └── app.js (1.2 KB)
+│   ├── package-lock.json (60.5 KB)
+│   └── package.json (0.4 KB)
+├── FRONTEND/
+│   └── proyectofinal/
+│       ├── public/
+│       │   ├── favicon.svg (9.3 KB)
+│       │   └── icons.svg (4.9 KB)
+│       ├── src/
+│       │   ├── assets/
+│       │   │   ├── hero.png (12.8 KB)
+│       │   │   ├── react.svg (4.0 KB)
+│       │   │   └── vite.svg (8.5 KB)
+│       │   ├── App.css (3.0 KB)
+│       │   ├── App.jsx (3.7 KB)
+│       │   ├── index.css (2.2 KB)
+│       │   └── main.jsx (0.2 KB)
+│       ├── index.html (0.4 KB)
+│       ├── package-lock.json (58.2 KB)
+│       ├── package.json (0.6 KB)
+│       ├── README.md (1.3 KB)
+│       └── vite.config.js (0.3 KB)
+├── README.md (0.0 KB)
+└── structure.md (0.2 KB)
