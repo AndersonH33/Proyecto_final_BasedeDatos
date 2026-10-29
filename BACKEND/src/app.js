@@ -3,6 +3,8 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { getSqlConnection } from './config/sqlserver.js';
 import { getOracleConnection } from './config/oracle.js';
+import authRoutes from './routes/auth.routes.js';
+import clientesRoutes from './routes/clientes.routes.js';
 
 // Cargar variables de entorno
 dotenv.config();
@@ -13,6 +15,8 @@ const port = process.env.PORT || 3000;
 // Middlewares
 app.use(cors());
 app.use(express.json());
+app.use('/api/auth', authRoutes);
+app.use('/api/clientes', clientesRoutes);
 
 // Endpoint de verificación de conexiones (Fase 2)
 app.get('/api/health', async (req, res) => {
