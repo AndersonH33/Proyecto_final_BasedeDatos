@@ -28,7 +28,7 @@ export const login = async (req, res) => {
     const user = result.recordset[0];
 
     // Validar estado (asumiendo que 1 es activo)
-    if (user.ESTADO !== 1 && user.ESTADO !== 'Activo') {
+    if (user.ESTADO !== true && user.ESTADO !== 1 && user.ESTADO !== '1' && user.ESTADO !== 'Activo') {
       return res.status(403).json({ message: 'Usuario inactivo' });
     }
 
