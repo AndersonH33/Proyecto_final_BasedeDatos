@@ -5,6 +5,16 @@ import { getSqlConnection } from './config/sqlserver.js';
 import { getOracleConnection } from './config/oracle.js';
 import authRoutes from './routes/auth.routes.js';
 import clientesRoutes from './routes/clientes.routes.js';
+import facturasRoutes from './routes/facturas.routes.js';
+import pagosRoutes from './routes/pagos.routes.js';
+import cuentasCobrarRoutes from './routes/cuentasCobrar.routes.js';
+import notasRoutes from './routes/notas.routes.js';
+import dashboardRoutes from './routes/dashboard.routes.js';
+import movimientosRoutes from './routes/movimientos.routes.js';
+import auditoriaRoutes from './routes/auditoria.routes.js';
+import usuariosRoutes from './routes/usuarios.routes.js';
+import seguridadRoutes from './routes/seguridad.routes.js';
+import reportesRoutes from './routes/reportes.routes.js';
 
 // Cargar variables de entorno
 dotenv.config();
@@ -17,6 +27,16 @@ app.use(cors());
 app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/clientes', clientesRoutes);
+app.use('/api/facturas', facturasRoutes);
+app.use('/api/pagos', pagosRoutes);
+app.use('/api/cuentas-cobrar', cuentasCobrarRoutes);
+app.use('/api/notas', notasRoutes);
+app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/movimientos', movimientosRoutes);
+app.use('/api/auditoria', auditoriaRoutes);
+app.use('/api/usuarios', usuariosRoutes);
+app.use('/api/seguridad', seguridadRoutes);
+app.use('/api/reportes', reportesRoutes);
 
 // Endpoint de verificación de conexiones (Fase 2)
 app.get('/api/health', async (req, res) => {

@@ -65,3 +65,15 @@ export const login = async (req, res) => {
     res.status(500).json({ message: 'Error interno del servidor' });
   }
 };
+
+// Obtener los datos del usuario logueado actualmente
+export const getMe = async (req, res) => {
+  try {
+    // req.user ya viene descifrado por el middleware verificarToken
+    res.json({
+      user: req.user
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Error al validar la sesión actual' });
+  }
+};
