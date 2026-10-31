@@ -1,4 +1,4 @@
-
+import logoAH from "../../assets/logo-ah.png";
 import { NavLink } from "react-router-dom";
 
 import {
@@ -35,10 +35,14 @@ const menuItems = [
 function Sidebar() {
   return (
     <aside className="sidebar">
-      <div className="sidebar-brand">
-        <div className="brand-icon">
-          <Droplets size={24} />
-        </div>
+  <div className="sidebar-brand">
+    <div className="brand-icon">
+      <img
+        src={logoAH}
+        alt="AH Cuentas por Cobrar"
+        className="sidebar-logo-img"
+      />
+    </div>
 
         <div>
           <h2>AH Cuentas por Cobrar</h2>

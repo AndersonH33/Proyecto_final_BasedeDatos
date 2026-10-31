@@ -70,27 +70,36 @@ export const getFacturaById = async (req, res) => {
 // 3. Crear una Factura (Maestro-Detalle con Transacción)
 export const createFactura = async (req, res) => {
   let connection;
-  const { 
-    id_cliente, numero_factura, serie_factura, fecha_emision, fecha_vencimiento, 
-    subtotal, total, saldo_pendiente, detalles 
+  const {
+    id_cliente, numero_factura, serie_factura, fecha_emision, fecha_vencimiento,
+    subtotal, total, saldo_pendiente, detalles
   } = req.body;
 
   try {
     connection = await getOracleConnection();
-    
+   
     // Iniciar transacción (no ponemos autoCommit: true)
-    
+   
     // A. Insertar cabecera y recuperar el ID generado (IDENTITY)
+    // Se elimina TO_DATE, ya que inyectaremos objetos Date nativos
     const sqlCabecera = `
-      INSERT INTO CXC_ADMIN.FACTURAS 
-      (ID_CLIENTE, NUMERO_FACTURA, SERIE_FACTURA, FECHA_EMISION, FECHA_VENCIMIENTO, SUBTOTAL, TOTAL, SALDO_PENDIENTE, ESTADO) 
-      VALUES 
-      (:id_cliente, :numero_factura, :serie_factura, TO_DATE(:fecha_emision, 'YYYY-MM-DD'), TO_DATE(:fecha_vencimiento, 'YYYY-MM-DD'), :subtotal, :total, :saldo_pendiente, 'Emitida')
+      INSERT INTO CXC_ADMIN.FACTURAS
+      (ID_CLIENTE, NUMERO_FACTURA, SERIE_FACTURA, FECHA_EMISION, FECHA_VENCIMIENTO, SUBTOTAL, TOTAL, SALDO_PENDIENTE, ESTADO)
+      VALUES
+      (:id_cliente, :numero_factura, :serie_factura, :fecha_emision, :fecha_vencimiento, :subtotal, :total, :saldo_pendiente, 'Emitida')
       RETURNING ID_FACTURA INTO :id_factura_out
     `;
-    
+   
     const bindsCabecera = {
-      id_cliente, numero_factura, serie_factura, fecha_emision, fecha_vencimiento, subtotal, total, saldo_pendiente,
+      id_cliente,
+      numero_factura,
+      serie_factura,
+      // Convertir explícitamente los strings ("2026-10-30") a objetos Date
+      fecha_emision: new Date(fecha_emision),
+      fecha_vencimiento: new Date(fecha_vencimiento),
+      subtotal,
+      total,
+      saldo_pendiente,
       id_factura_out: { type: oracledb.NUMBER, dir: oracledb.BIND_OUT } // Captura el ID recién creado
     };
 
@@ -99,9 +108,9 @@ export const createFactura = async (req, res) => {
 
     // B. Insertar cada línea de detalle asociada al nuevo ID
     const sqlDetalle = `
-      INSERT INTO CXC_ADMIN.FACTURAS_DETALLE 
-      (ID_FACTURA, DESCRIPCION, CANTIDAD, PRECIO_UNITARIO, SUBTOTAL) 
-      VALUES 
+      INSERT INTO CXC_ADMIN.FACTURAS_DETALLE
+      (ID_FACTURA, DESCRIPCION, CANTIDAD, PRECIO_UNITARIO, SUBTOTAL)
+      VALUES
       (:id_factura, :descripcion, :cantidad, :precio_unitario, :subtotal_detalle)
     `;
 
@@ -121,7 +130,6 @@ export const createFactura = async (req, res) => {
     res.status(201).json({ message: 'Factura registrada exitosamente', id_factura: idFacturaNuevo });
   } catch (error) {
     console.error('Error en transacción de factura:', error);
-    // Si hubo cualquier error, deshacemos todo lo que se intentó guardar en esta petición
     if (connection) {
       try { await connection.rollback(); } catch (rollbackErr) { console.error('Error en rollback:', rollbackErr); }
     }

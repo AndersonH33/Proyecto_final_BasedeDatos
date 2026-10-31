@@ -5,7 +5,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-
+import Login from "./pages/Login";
 import MainLayout from "./layouts/MainLayout";
 
 import Dashboard from "./pages/Dashboard";
@@ -27,6 +27,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/login" element={<Login />} />
         <Route path="/" element={<MainLayout />}>
           <Route
             index
